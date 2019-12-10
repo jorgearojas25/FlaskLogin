@@ -19,9 +19,7 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    m = MySQLUser()
-    mT = MySQLToken()
-    g.db = [m,mT]
+    
 
     
     @app.route('/')

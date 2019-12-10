@@ -3,50 +3,27 @@ from app.models import User,Token
 import datetime
 
 class ConnectionMySQL:
-
-    # singleton
-    __instance = None
-
-    @staticmethod
-    def getInstance():        
-        if ConnectionMySQL.__instance == None:
-            ConnectionMySQL()
-        return ConnectionMySQL.__instance        
-    
-    def __init__(self):
-        if ConnectionMySQL.__instance !=None:
-            raise Exception("This class is a singleton!")
-        else:
-            self.host='localhost',
-            self.user='root',
-            self.password='root',
-            self.dataBase='pokedex'
-            ConnectionMySQL.__instance = self
     
     def connect(self):
         config = {
             'host' :'localhost',
             'user' :'root',
             'password' : 'rootmysql2019',
-            'database' : 'db_login'
+            'database' : 'db_login',
+            'port' : "3306"
         }
         
         self.db = mysql.connector.connect(**config)        
         return self.db.cursor() 
-    
-    
-    
-    
         
 
 
 class MySQLUser:
 
-    connectionMySQL = ConnectionMySQL.getInstance()
+    connectionMySQL = ConnectionMySQL()
 
     def __init__(self):
-        self.cursor = self.connectionMySQL.connect()
-    
+        self.cursor = self.connectionMySQL.connect()    
         
 
     def create(self, user):
@@ -56,10 +33,12 @@ class MySQLUser:
         idToken = mT.getLastIdToken()
                
         sql ="INSERT INTO users (email, password, idtoken) VALUES (%s, %s, %s)"
-        val = (user.email, user.password, idToken)         
+        val = (user.email, user.password, idToken,)         
         self.cursor.execute(sql,val)
         print('/*-*/*-*-/*-*-/*-/*-*-*-*-/*-') 
         self.connectionMySQL.db.commit()
+
+        
         
 
     def getOne(self, email):
@@ -74,6 +53,7 @@ class MySQLUser:
     def getOneByToken(self, idToken):
 
         sql = "SELECT * FROM users WHERE idtoken='{}'".format(idToken)
+        
         self.cursor.execute(sql)
         query = self.cursor.fetchone()
         if query == None:
@@ -97,7 +77,7 @@ class MySQLUser:
 
 class MySQLToken:
 
-    connectionMySQL = ConnectionMySQL.getInstance()
+    connectionMySQL = ConnectionMySQL()
 
     def __init__(self):
         self.cursor = self.connectionMySQL.connect()
