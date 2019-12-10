@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, redirect,g
 from app.db.dbMySQL import MySQLUser,MySQLToken
+from app.utils.temp_toke import perpetualTimer
 
 
 def create_app(test_config=None):
@@ -17,11 +18,17 @@ def create_app(test_config=None):
         app.config.from_pyfile('config.py', silent=True)
     else:
         # load the test config if passed in
-        app.config.from_mapping(test_config)
-
+        app.config.from_mapping(test_config)    
     
 
     
+
+    @app.before_request
+    def before_request():
+        # valor de 10 segundos cambio de token de usuario
+        tempToken = perpetualTimer(10)
+        g.user = tempToken
+
     @app.route('/')
     def hello():
         
