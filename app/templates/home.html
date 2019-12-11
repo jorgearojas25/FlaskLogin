@@ -1,7 +1,20 @@
-<head>
+{% extends 'base.html' %}
+
+{% block meta %}
     <!--refresco de pagina cada 30 segundos, para verificar que el token aun sea valido-->
     <meta http-equiv="refresh" content="30">
-</head> 
-<h1>Home user</h1>
-Email: {{ user.email }}
-Password: {{ user.password }}
+{% endblock %}
+
+
+{% block titulo %}Home{% endblock %}
+
+{% block items %}
+    <li><a href="logout">Logout</a></li>    
+{% endblock %}    
+
+{% block contenido %}
+    <h1>Home user</h1>
+    Email: {{ user.email }}
+    Password: {{ user.password }}
+{% endblock %}
+

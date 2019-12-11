@@ -20,6 +20,7 @@ def signIn():
     
     # verficia si el toquen que se tiene en las cookies esta registrado en la bd y devulve el usuario corresponidente
     user = mT.existToken(request.cookies.get('token'))
+    print(request.cookies.get('token'))
 
     if None != user:  
 
@@ -95,7 +96,7 @@ def register():
         m.create(user)      
         session['user'] = user.id
 
-        response = make_response(render_template('sign_in.html'))
+        response = make_response(render_template('home.html'))
         # expiracion de cookie (no es posble ponerl una espiracion menor a 0.3 dias)
         expireDate = t.date + datetime.timedelta(days=0.3)
         response.set_cookie("token",tokenValue, expires=expireDate)
@@ -106,7 +107,11 @@ def register():
 
     return render_template('register.html')
 
-
+@auth_bp.route('/logout')
+def logout():
+    response = make_response(render_template('sign_in.html'))
+    response.set_cookie("token",'')
+    return response
 
 
     
