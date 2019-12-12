@@ -17,8 +17,33 @@
 {% endblock %}
 
 {% block contenido %}
-    <h1>Home user</h1>
-    Email: {{ user.email }}
-    Password: {{ user.password }}
+    <div class="row">
+        <h4 class="offset-s3 col s6 center-align">Home user</h4>
+    </div>  
+    <div class="row">
+        <div class="offset-s4 col s4 z-depth-2">
+            <div class="row">                
+                <img class="offset-s3 col s6 center-align circle" src="{{ url_for('static', filename= 'img/user.jpeg') }}" alt="imagen usuario">
+            </div>
+            <div class="container">
+                <table class="striped">
+                    <tbody>
+                        <tr>
+                            <td>Email:</td>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td>{{ user.password }}</td>
+                        </tr>
+                    </tbody>
+                </table>            
+            </div>
+        </div>
+
+    </div>  
+    
+    
+
 {% endblock %}
 

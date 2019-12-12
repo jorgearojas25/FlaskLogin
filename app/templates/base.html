@@ -29,7 +29,7 @@
         {% if messages %}
             <div class="row">
             {% for message in messages %}
-                <div id='error' class="col s4 offset-s4 z-depth-2 red accent-3" onclick='document.getElementById("error").classList.add("hide")'>
+                <div id='error' class="col s4 offset-s4 z-depth-2 red accent-3" onclick='document.getElementById("error").classList.add("scale-transition");document.getElementById("error").classList.add("scale-out")'>
                     <div class="col s11">{{ message }}</div>
                     <div class="col s1" style="cursor:pointer">x</div>
                 </div>
