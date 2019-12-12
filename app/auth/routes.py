@@ -1,4 +1,4 @@
-from flask import render_template, request, session, make_response, g,copy_current_request_context,redirect
+from flask import render_template, flash, request, session, make_response, g,copy_current_request_context,redirect
 
 
 from app.db.dbMySQL import MySQLUser,MySQLToken
@@ -75,8 +75,8 @@ def signIn():
                 g.user.start()                                             
                 
                 
-                return response
-
+                return response        
+        flash('Datos ingresados incorrectos')
         return render_template('sign_in.html')        
 
     return render_template('sign_in.html')
@@ -93,16 +93,17 @@ def register():
         t = Token(tokenValue,datetime.datetime.now(),0)
         # creacion de usario
         user = User(request.form['username'],request.form['password'],t,'0')              
-        m.create(user)      
-        session['user'] = user.id
+        if m.create(user):
+            session['user'] = user.id
 
-        response = make_response(render_template('home.html'))
-        # expiracion de cookie (no es posble ponerl una espiracion menor a 0.3 dias)
-        expireDate = t.date + datetime.timedelta(days=0.3)
-        response.set_cookie("token",tokenValue, expires=expireDate)
-        
-                #return 'Email: {} \nPassword: {}'.format(user.email,user.password)
-        return response
+            response = make_response(render_template('home.html',user=user))
+            # expiracion de cookie (no es posble ponerl una espiracion menor a 0.3 dias)
+            expireDate = t.date + datetime.timedelta(days=0.3)
+            response.set_cookie("token",tokenValue, expires=expireDate)
+            
+                    #return 'Email: {} \nPassword: {}'.format(user.email,user.password)
+            return response
+        flash('Email ya creado')
         
 
     return render_template('register.html')

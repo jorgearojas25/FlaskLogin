@@ -33,10 +33,14 @@ class MySQLUser:
         idToken = mT.getLastIdToken()
                
         sql ="INSERT INTO users (email, password, idtoken) VALUES (%s, %s, %s)"
-        val = (user.email, user.password, idToken,)         
-        self.cursor.execute(sql,val)
-        print('/*-*/*-*-/*-*-/*-/*-*-*-*-/*-') 
+        val = (user.email, user.password, idToken,) 
+        try:
+            self.cursor.execute(sql,val)            
+        except:
+            return False       
+        
         self.connectionMySQL.db.commit()
+        return True
 
         
         

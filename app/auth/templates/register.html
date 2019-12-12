@@ -7,14 +7,35 @@
     <li><a href="register">Registro</a></li> 
 {% endblock %}    
     
+{% block items2 %}
+    <li><a href="sign_in">Inicio Sesión</a></li>
+    <li><a href="register">Registro</a></li> 
+{% endblock %}
 
 {% block contenido %}
-    <h1>Registro</h1>
-    <form method="post" action="register">
-        <label for="username">Email</label>
-        <input name="username" id="username" type="email" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Registrarse">
-    </form>
+    
+    <div class="row">        
+        <h4 class="col s12 center-align">Registro</h4>
+        <form method="post" action="register" class="offset-s3 offset-l4 col s6 l4 z-depth-2" style="padding: 10px;">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">email</i>
+                <input name="username" id="username" type="email" class="validate" required>
+                <label for="username">Email</label>
+            </div>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">lock</i>
+                <input name="password" id="password" type="password" class="validate" required>
+                <label for="password">Password</label>
+            </div>            
+            <div class="container">
+                <div class="offset-s3 col s6">
+                    <button class="btn waves-effect waves-light" type="submit">
+                        Registrarse
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>                
+            </div>            
+        </form>
+    </div>
+    
 {% endblock %}
